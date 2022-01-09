@@ -55,8 +55,9 @@ async function stamp_osm_tile(z, x, y, options = {}) {
 
       // Fetch the actual image from the OSM.org tile server
       const response = await fetch("https://tile.openstreetmap.org/"+z+"/"+(x+xoff)+"/"+(y+yoff)+".png", {
-        // We add our AMO URL as the referrer to make our requests identifiable
-        referrer: "https://www.test2.de/",
+        // Adding our OSM URL won't work (filtered by Firefox), so we use
+        // an ".invalid" URL for now. This is to make our requests identifiable.
+        referrer: "https://osm-everywhere.firefox-addon.invalid/",
         // Force cache requests to reduce osm.org tile server requests
         cache: "force-cache"
       });
