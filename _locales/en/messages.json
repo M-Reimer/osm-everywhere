@@ -1,0 +1,6 @@
+{
+  "extensionDescription": {
+    "message": "This Add-on hooks into map tile requests going to some commercial map services and replaces them with OpenStreetMap tiles",
+    "description": "Description of the extension"
+  }
+}

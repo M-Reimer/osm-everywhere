@@ -1,0 +1,6 @@
+{
+  "extensionDescription": {
+    "message": "Dieses Add-on hängt sich in Map-Tile Abrufe die an kommerzielle Kartendienste gehen und ersetzt diese mit OpenStreetMap Tiles",
+    "description": "Description of the extension"
+  }
+}

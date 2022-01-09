@@ -1,0 +1,29 @@
+{
+  "manifest_version": 2,
+  "name": "OSM Everywhere",
+  "version": "0.0.1",
+
+  "description": "__MSG_extensionDescription__",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{e3499292-1d3a-47fc-b804-8655638ac670}",
+      "strict_min_version": "60.0"
+    }
+  },
+
+  "background": {
+    "scripts": ["background.js",
+                "handlers/bing.js",
+                "handlers/google.js",
+                "handlers/here.js"]
+  },
+
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+
+  "default_locale": "en"
+}
