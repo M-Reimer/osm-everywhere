@@ -1,6 +1,6 @@
 {
   "extensionDescription": {
     "message": "这个插件将劫持发送到部分商业地图服务的瓦片请求并将它们替换为OpenStreetMap瓦片",
-    "description": "这个插件的描述"
+    "description": "Description of the extension"
   }
 }
