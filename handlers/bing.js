@@ -61,17 +61,38 @@ function redirect_bing(details) {
       return {};
   }
 
-  // Only interrupt requests that resolve into an image
-  if (details.url.match(/js=1/))
-    return {};
+  const url = new URL(details.url);
+  const sparams = url.searchParams;
 
   let quadkey;
-  if (details.url.match(/\/([0-3]+)\?/))
+  // The /comp/ch path actually is an API which can return tiles and other data
+  if (url.pathname.startsWith("/comp/ch/")) {
+    // Do not interrupt requests that return JSON data
+    if (sparams.has("js") && sparams.get("js") == "1")
+      return {};
+
+    // Some info about the requested tile is passed with the "it" parameter
+    // This is actually a required parameter, so we can expect it to be there
+    if (!sparams.has("it"))
+      return {};
+
+    // Don't handle some special tiles
+    const tileinfo = sparams.get("it").split(",");
+    if (tileinfo.includes("A") || // Aerial images
+        tileinfo.includes("BE"))  // Birds eye
+      return {};
+
+    if (!details.url.match(/\/([0-3]+)\?/))
+      return {};
     quadkey = RegExp.$1;
-  else if (details.url.match(/\/r([0-3]+)[.?]/))
+  }
+  // The /tiles path most probably is just a tile provider
+  else {
+    if (!details.url.match(/\/r([0-3]+)[.?]/))
+      return {};
     quadkey = RegExp.$1;
-  else
-    return {};
+  }
+
   const [z, x, y] = decode_quadkey(quadkey);
 
   let filter = browser.webRequest.filterResponseData(details.requestId);
