@@ -21,14 +21,14 @@ function redirect_here(details) {
   if (details.originUrl) {
     const origin = new URL(details.originUrl);
     if (origin.host in URL_BLACKLIST)
-      return {};
+      return;
     if (origin.host.endsWith(".here.com"))
-      return {}
+      return;
   }
 
   // Parse URL
   if (!details.url.match(/\/([a-z.]+)\/([0-9]+)\/([0-9]+)\/([0-9]+)\/([0-9]+)\/png8/))
-    return {};
+    return;
   const type = RegExp.$1;
   const z = parseInt(RegExp.$2);
   const x = parseInt(RegExp.$3);
@@ -37,9 +37,9 @@ function redirect_here(details) {
 
   // Check URL parameters
   if (!["normal.day", "terrain.day"].includes(type))
-    return {};
+    return;
   if (size == 128)
-    return {};
+    return;
 
   // Set up filter
   let filter = browser.webRequest.filterResponseData(details.requestId);
@@ -47,8 +47,6 @@ function redirect_here(details) {
     filter.write(await stamp_osm_tile(z, x, y, {size: size}));
     filter.close();
   }
-
-  return {};
 }
 
 browser.webRequest.onBeforeRequest.addListener(
