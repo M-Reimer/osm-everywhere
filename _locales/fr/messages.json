@@ -1,0 +1,6 @@
+{
+  "extensionDescription": {
+    "message": "Cette extension dévie les requêtes de tuile de cartes destinées à des services commerciaux et les redirige vers les tuiles OpenStreetMap.
+    "description": "Description of the extension"
+  }
+}
