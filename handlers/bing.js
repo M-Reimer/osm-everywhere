@@ -68,7 +68,7 @@ function redirect_bing(details) {
   // The /comp/ch path actually is an API which can return tiles and other data
   if (url.pathname.startsWith("/comp/ch/")) {
     // Do not interrupt requests that return JSON data
-    if (sparams.has("js") && sparams.get("js") == "1")
+    if (sparams.get("js") === "1")
       return;
 
     // Some info about the requested tile is passed with the "it" parameter
