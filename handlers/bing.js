@@ -57,7 +57,7 @@ function redirect_bing(details) {
     const origin = new URL(details.originUrl);
     if (origin.host in URL_BLACKLIST)
       return;
-    if (origin.host === "maps.bing.com")
+    if (origin.host.endsWith(".bing.com"))
       return;
   }
 
