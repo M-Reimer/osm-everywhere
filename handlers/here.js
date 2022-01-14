@@ -35,9 +35,13 @@ function redirect_here(details) {
   const y = parseInt(RegExp.$4);
   const size = parseInt(RegExp.$5);
 
-  // Check URL parameters
+  // Only replace the "normal tiles" and "terrain tiles" for now
+  // TODO: Probably have to add more depending on usage on websites
   if (!["normal.day", "terrain.day"].includes(type))
     return;
+
+  // 128 pixels size is allowed for some tiles but deprecated according to
+  // here.com.
   if (size == 128)
     return;
 
