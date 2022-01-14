@@ -56,9 +56,9 @@ function redirect_bing(details) {
   if (details.originUrl) {
     const origin = new URL(details.originUrl);
     if (origin.host in URL_BLACKLIST)
-      return {};
-    if (origin.host === "maps.bing.com")
-      return {};
+      return;
+    if (origin.host.endsWith(".bing.com"))
+      return;
   }
 
   const url = new URL(details.url);
@@ -68,28 +68,28 @@ function redirect_bing(details) {
   // The /comp/ch path actually is an API which can return tiles and other data
   if (url.pathname.startsWith("/comp/ch/")) {
     // Do not interrupt requests that return JSON data
-    if (sparams.has("js") && sparams.get("js") == "1")
-      return {};
+    if (sparams.get("js") === "1")
+      return;
 
     // Some info about the requested tile is passed with the "it" parameter
     // This is actually a required parameter, so we can expect it to be there
     if (!sparams.has("it"))
-      return {};
+      return;
 
     // Don't handle some special tiles
     const tileinfo = sparams.get("it").split(",");
     if (tileinfo.includes("A") || // Aerial images
         tileinfo.includes("BE"))  // Birds eye
-      return {};
+      return;
 
     if (!details.url.match(/\/([0-3]+)\?/))
-      return {};
+      return;
     quadkey = RegExp.$1;
   }
   // The /tiles path most probably is just a tile provider
   else {
     if (!details.url.match(/\/r([0-3]+)[.?]/))
-      return {};
+      return;
     quadkey = RegExp.$1;
   }
 

@@ -21,20 +21,20 @@ function redirect_google(details) {
   if (details.originUrl) {
     const origin = new URL(details.originUrl);
     if (origin.host in URL_BLACKLIST)
-      return {};
+      return;
     if (origin.host.startsWith("maps.google"))
-      return {}
+      return;
   }
 
   // Check if required parameters can be found
   if (!details.url.match(/!1i([0-9]+)/))
-    return {};
+    return;
   const z = parseInt(RegExp.$1);
   if (!details.url.match(/!2i([0-9]+)/))
-    return {};
+    return;
   const x = parseInt(RegExp.$1);
   if (!details.url.match(/!3i([0-9]+)/))
-    return {};
+    return;
   const y = parseInt(RegExp.$1);
 
   // Set up filter
@@ -43,8 +43,6 @@ function redirect_google(details) {
     filter.write(await stamp_osm_tile(z, x, y));
     filter.close();
   }
-
-  return {};
 }
 
 browser.webRequest.onBeforeRequest.addListener(
