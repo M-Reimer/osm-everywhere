@@ -57,6 +57,7 @@ browser.webRequest.onBeforeRequest.addListener(
   redirect_here,
   {urls: ["https://*.base.maps.ls.hereapi.com/maptile/2.1/maptile/*",
           "https://*.base.maps.api.here.com/maptile/2.1/maptile/*",
-          "https://*.aerial.maps.api.here.com/maptile/2.1/maptile/*"]},
+          "https://*.aerial.maps.api.here.com/maptile/2.1/maptile/*",
+          "https://*.traffic.maps.cit.api.here.com/maptile/2.1/traffictile/*"]},
   ["blocking"]
 );
