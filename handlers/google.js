@@ -26,7 +26,14 @@ function redirect_google(details) {
       return;
   }
 
-  // Check if required parameters can be found
+  // NOTE: This handling of the "pb" parameter is far from perfect.
+  //       Google uses a properietary paramter format which is only partially
+  //       known how it works. More info:
+  // http://blog.themillhousegroup.com/2016/08/
+  // https://stackoverflow.com/questions/18413193/
+
+  // Check if required parameters can be found (usually the first three integer
+  // values are our tile parameters...)
   if (!details.url.match(/!1i([0-9]+)/))
     return;
   const z = parseInt(RegExp.$1);
