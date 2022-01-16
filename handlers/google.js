@@ -48,6 +48,10 @@ function redirect_google(details) {
   if (!details.url.match(/!2sRoadmap[!&]/))
     return;
 
+  // Skip requests that return JSON
+  if (!details.url.match(/!4e0[!&]/))
+    return;
+
   // Set up filter
   let filter = browser.webRequest.filterResponseData(details.requestId);
   filter.onstart = async () => {
