@@ -27,7 +27,7 @@ function redirect_here(details) {
   }
 
   // Parse URL
-  if (!details.url.match(/\/([a-z.]+)\/([0-9]+)\/([0-9]+)\/([0-9]+)\/([0-9]+)\/png8/))
+  if (!details.url.match(/\/([a-z.]+)\/([0-9]+)\/([0-9]+)\/([0-9]+)\/([0-9]+)\/(?:png|png8|jpg)/))
     return;
   const type = RegExp.$1;
   const z = parseInt(RegExp.$2);
