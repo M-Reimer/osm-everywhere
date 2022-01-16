@@ -44,6 +44,10 @@ function redirect_google(details) {
     return;
   const y = parseInt(RegExp.$1);
 
+  // Only replace "Roadmap" tiles
+  if (!details.url.match(/!2sRoadmap[!&]/))
+    return;
+
   // Set up filter
   let filter = browser.webRequest.filterResponseData(details.requestId);
   filter.onstart = async () => {
