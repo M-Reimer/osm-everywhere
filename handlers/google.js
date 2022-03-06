@@ -62,6 +62,7 @@ function redirect_google(details) {
 
 browser.webRequest.onBeforeRequest.addListener(
   redirect_google,
-  {urls: ["https://maps.googleapis.com/maps/vt?pb=*"]},
+  {urls: ["https://maps.googleapis.com/maps/vt?pb=*",
+          "https://maps.google.com/maps/vt?pb=*"]},
   ["blocking"]
 );
