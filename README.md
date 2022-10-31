@@ -15,7 +15,7 @@ Currently, only three servers are supported:
 * Google
 * Here
 
-More could be added if you request them in an Issue. Bug please provide at least two example pages where the requested map service is used. This means two **external** pages and not the website of the map service itself.
+More could be added if you request them in an Issue. But please provide at least two example pages where the requested map service is used. This means two **external** pages and not the website of the map service itself.
 
 ## Port to Google Chrome
 Please don't request an Google Chrome version. Chrome never had the [filterResponseData](https://developer.mozilla.org/en-US/docs/Mozilla/Add-ons/WebExtensions/API/webRequest/filterResponseData) API, which is required to manipulate data of web requests. Currently [Google cripples their webRequest API even more](https://developer.chrome.com/docs/extensions/mv3/mv3-migration/#when-use-blocking-webrequest). So what I'm doing here is technically impossible in Google Chrome!
