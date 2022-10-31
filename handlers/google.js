@@ -18,7 +18,7 @@
 
 // URL with markers: https://www.google.com/search?client=firefox-b-lm&tbs=lf:1,lf_ui:4&tbm=lcl&sxsrf=ALiCzsa8yNgFD8XKH7NfdkwX2VSp4RoJ1g:1666803771743&q=aida&rflfq=1&num=10&ved=2ahUKEwjI9uX1r_76AhXDQfEDHVmwB9kQtgN6BAgtEAY#rlfi=hd:;si:;mv:%5B%5B48.233765999999996,16.4011578%5D,%5B48.178816,16.2954672%5D%5D;tbs:lrf:!1m4!1u3!2m2!3m1!1e1!2m1!1e3!3sIAE,lf:1,lf_ui:4
 
-// NOTE: Google uses a properietary paramter format which is only partially
+// NOTE: Google uses a properietary parameter format which is only partially
 //       known how it works. More info:
 // http://blog.themillhousegroup.com/2016/08/
 // https://stackoverflow.com/questions/18413193/
