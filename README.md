@@ -14,6 +14,7 @@ Currently, only three servers are supported:
 * Bing
 * Google
 * Here
+
 More could be added if you request them in an Issue. Bug please provide at least two example pages where the requested map service is used. This means two **external** pages and not the website of the map service itself.
 
 ## Port to Google Chrome
