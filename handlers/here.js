@@ -1,6 +1,6 @@
 /*
     Firefox addon "OSM Everywhere"
-    Copyright (C) 2022  Manuel Reimer <manuel.reimer@gmx.de>
+    Copyright (C) 2024  Manuel Reimer <manuel.reimer@gmx.de>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -59,5 +59,41 @@ browser.webRequest.onBeforeRequest.addListener(
           "https://*.base.maps.api.here.com/maptile/2.1/maptile/*",
           "https://*.aerial.maps.api.here.com/maptile/2.1/maptile/*",
           "https://*.traffic.maps.cit.api.here.com/maptile/2.1/traffictile/*"]},
+  ["blocking"]
+);
+
+
+function redirect_here_v3(details) {
+  // Check against URL blacklist, first
+  if (details.originUrl) {
+    const origin = new URL(details.originUrl);
+    if (origin.host in URL_BLACKLIST)
+      return;
+    if (origin.host.endsWith(".here.com"))
+      return;
+  }
+
+  // Parse URL
+  if (!details.url.match(/\/([0-9]+)\/([0-9]+)\/([0-9]+)\/(?:png|png8|jpg)/))
+    return;
+  const z = parseInt(RegExp.$1);
+  const x = parseInt(RegExp.$2);
+  const y = parseInt(RegExp.$3);
+
+  // Get size
+  const url = new URL(details.url);
+  const size = parseInt(url.searchParams.get("size") || "256");
+
+  // Set up filter
+  let filter = browser.webRequest.filterResponseData(details.requestId);
+  filter.onstart = async () => {
+    filter.write(await stamp_osm_tile(z, x, y, {size: size}));
+    filter.close();
+  }
+}
+
+browser.webRequest.onBeforeRequest.addListener(
+  redirect_here_v3,
+  {urls: ["https://maps.hereapi.com/v3/base/mc/*"]},
   ["blocking"]
 );
