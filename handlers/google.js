@@ -1,6 +1,6 @@
 /*
     Firefox addon "OSM Everywhere"
-    Copyright (C) 2022  Manuel Reimer <manuel.reimer@gmx.de>
+    Copyright (C) 2026  Manuel Reimer <manuel.reimer@gmx.de>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -156,6 +156,8 @@ browser.webRequest.onBeforeRequest.addListener(
   redirect_google,
   {urls: ["https://maps.googleapis.com/maps/vt?pb=*",
           "https://maps.google.com/maps/vt?pb=*",
-          "https://www.google.com/maps/vt?pb=*"]},
+          "https://www.google.com/maps/vt?pb=*",
+          "https://mapsresources-pa.googleapis.com/v1/tiles?pb=*",
+          "https://mapsresources-pa.googleapis.com/v1/tiles?*&pb=*"]},
   ["blocking"]
 );
