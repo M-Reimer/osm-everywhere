@@ -1,6 +1,6 @@
 /*
     Firefox addon "OSM Everywhere"
-    Copyright (C) 2022  Manuel Reimer <manuel.reimer@gmx.de>
+    Copyright (C) 2026  Manuel Reimer <manuel.reimer@gmx.de>
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
@@ -21,6 +21,14 @@ const URL_BLACKLIST = {
   "tools.geofabrik.de": true,
   "mc.bbbike.org": true
 };
+
+// Tile server URL we get OSM tiles from
+const TILE_SERVER = "https://tile.openstreetmap.org/";
+
+// Referrer we use to identify our Add-on to the OSM tile servers
+// https://wiki.openstreetmap.org/wiki/Referer
+const REFERRER = "https://osm-everywhere.firefox-addon.invalid/";
+
 
 // We intercept the "non OSM" tile services and replace their response with
 // OSM tiles. This means two things
@@ -54,10 +62,8 @@ async function stamp_osm_tile(z, x, y, options = {}) {
     for (let yoff = 0; yoff < size/TILE_SIZE; yoff++) {
 
       // Fetch the actual image from the OSM.org tile server
-      const response = await fetch("https://tile.openstreetmap.org/"+z+"/"+(x+xoff)+"/"+(y+yoff)+".png", {
-        // Adding our AMO URL won't work (filtered by Firefox), so we use
-        // an ".invalid" URL for now. This is to make our requests identifiable.
-        referrer: "https://osm-everywhere.firefox-addon.invalid/",
+      const response = await fetch(TILE_SERVER+z+"/"+(x+xoff)+"/"+(y+yoff)+".png", {
+        referrer: REFERRER,
         // Force cache requests to reduce osm.org tile server requests
         cache: "force-cache"
       });
@@ -97,3 +103,19 @@ async function stamp_osm_tile(z, x, y, options = {}) {
     }, options.format || "image/png");
   });
 }
+
+// Ensure our own tile server requests go out with our "application referrer"
+browser.webRequest.onBeforeSendHeaders.addListener(
+  e => {
+    if (e.documentUrl.startsWith(browser.runtime.getURL(""))) {
+      for (const header of e.requestHeaders) {
+        if (header.name.toLowerCase() === "referer")
+          return;
+      }
+      e.requestHeaders.push({"name": "Referer", "value": REFERRER});
+      return {requestHeaders: e.requestHeaders};
+    }
+  },
+  {urls: [TILE_SERVER + "*"]},
+  ["blocking", "requestHeaders"]
+);
